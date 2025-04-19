@@ -19,6 +19,20 @@ npm install express mongoose dotenv cors express-validator
 
 ---
 
+## Dependencias
+
+express: Permite importar express y configurar un servidor basico
+
+mongoose: Libreria para conectarse y trabajar con MongoDB usando modelos
+
+dotenv: Permite cargar variables de entorno desde un archivo .env
+
+cors: Permite solicitudes desde otros orígenes (cross-origin)
+
+express.json(): Permite recibir datos tipo JSON en las solicitudes
+
+---
+
 ## .env
 
 MONGO_URI=mongodb://localhost:27017/SegundoProyectoBackend
