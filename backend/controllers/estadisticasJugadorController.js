@@ -18,7 +18,9 @@ exports.crearEstadisticasJugador = async (req, res) => {
 
 exports.obtenerEstadisticasJugadores = async (req, res) => {
     try {
-        const estadisticasJugadores = await EstadisticasJugador.find();
+        const estadisticasJugadores = await EstadisticasJugador.find()
+           .populate('jugador', 'nombre')
+           .populate('partido', 'equipoRival' , 'fecha');
         res.status(200).json(estadisticasJugadores);
     } catch (error) {
         res.status(400).json({ message: 'Error al obtener las estadísticas de los jugadores', error });

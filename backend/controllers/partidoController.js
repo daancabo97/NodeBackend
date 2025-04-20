@@ -18,7 +18,9 @@ exports.crearPartido = async (req, res) => {
 
 exports.obtenerPartidos = async (req, res) => {
     try {
-        const partidos = await Partido.find();
+        const partidos = await Partido.find()
+            .populate('jugadoresConvocados', 'nombre')
+            .populate('Tecnico', 'nombre');
         res.status(200).json(partidos);
     } catch (error) {
         res.status(400).json({ message: 'Error al obtener los partidos', error });
