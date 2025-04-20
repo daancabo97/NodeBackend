@@ -11,10 +11,10 @@ exports.crearPartido = async (req, res) => {
         const nuevoPartido = new Partido(req.body);
         await nuevoPartido.save();
 
-        const nombresJugadores = await Partido.findById(nuevoPartido._id)
-            .populate('jugadoresConvocados.jugador', 'nombre')
-            .populate('Tecnico', 'nombre');
-        res.status(201).json({ message: 'Se ha creado con exito el partido!', nuevoPartido: nombresJugadores });
+        const partidoCompleto = await Partido.findById(nuevoPartido._id)
+            .populate('jugadoresConvocados.jugador', 'nombre correo')
+            .populate('Tecnico', 'nombre correo');
+        res.status(201).json({ message: 'Se ha creado con exito el partido!', nuevoPartido: partidoCompleto });
     } catch (error) {
         res.status(400).json({ message: 'Error al crear el partido', error });
     }
@@ -23,8 +23,8 @@ exports.crearPartido = async (req, res) => {
 exports.obtenerPartidos = async (req, res) => {
     try {
         const partidos = await Partido.find()
-            .populate('jugadoresConvocados.jugador', 'nombre')
-            .populate('Tecnico', 'nombre');
+            .populate('jugadoresConvocados.jugador', 'nombre correo')
+            .populate('Tecnico', 'nombre correo');
         res.status(200).json(partidos);
     } catch (error) {
         res.status(400).json({ message: 'Error al obtener los partidos', error });
@@ -36,8 +36,8 @@ exports.obtenerPartidoPorId = async (req, res) => {
 
     try {
         const partidoEncontrado = await Partido.findById(id)
-            .populate('jugadoresConvocados.jugador', 'nombre')
-            .populate('Tecnico', 'nombre');
+            .populate('jugadoresConvocados.jugador', 'nombre correo')
+            .populate('Tecnico', 'nombre correo');
         if (!partidoEncontrado) {
             return res.status(404).json({ message: 'Partido no encontrado' });
         }
@@ -56,8 +56,8 @@ exports.actualizarPartido = async (req, res) => {
 
     try {
         const partidoActualizado = await Partido.findByIdAndUpdate(id, req.body, { new: true })
-            .populate('jugadoresConvocados.jugador', 'nombre')
-            .populate('Tecnico', 'nombre');
+            .populate('jugadoresConvocados.jugador', 'nombre correo')
+            .populate('Tecnico', 'nombre correo');
         if (!partidoActualizado) {
             return res.status(404).json({ message: 'Partido no encontrado' });
         }
