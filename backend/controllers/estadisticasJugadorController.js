@@ -10,7 +10,12 @@ exports.crearEstadisticasJugador = async (req, res) => {
     try {
         const nuevaEstadistica = new EstadisticasJugador(req.body);
         await nuevaEstadistica.save();
-        res.status(201).json({ message: 'Se han creado con exito las estadisticas del jugador!', nuevaEstadistica });
+
+        const estadisticaCompleta = await EstadisticasJugador.findById(nuevaEstadistica._id)
+            .populate('jugador', 'nombre correo')
+            .populate('partido', 'equipoRival fecha');
+
+        res.status(201).json({ message: 'Se han creado con exito las estadisticas del jugador!', estadistica: estadisticaCompleta, nuevaEstadistica });
     } catch (error) {
         res.status(400).json({ message: 'Error al crear las estadísticas del jugador', error });
     }
