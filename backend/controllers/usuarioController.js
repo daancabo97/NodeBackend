@@ -11,9 +11,7 @@ exports.crearUsuario = async (req, res) => {
     try {
         const nuevoUsuario = new Usuario(req.body);
         await nuevoUsuario.save();
-        const posicionJugadores = await Usuario.findById(nuevoUsuario._id)
-                .populate('posicionJugadores.jugador', 'posicion')
-        res.status(201).json({ message: 'Usuario creado exitosamente', nuevoUsuario: posicionJugadores });
+        res.status(201).json({ message: 'Usuario creado exitosamente', nuevoUsuario });
     } catch (error) {
         res.status(400).json({ message: 'Error al crear el usuario', error });
     }

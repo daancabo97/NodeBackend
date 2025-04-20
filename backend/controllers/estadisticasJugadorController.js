@@ -24,10 +24,11 @@ exports.crearEstadisticasJugador = async (req, res) => {
 exports.obtenerEstadisticasJugadores = async (req, res) => {
     try {
         const estadisticasJugadores = await EstadisticasJugador.find()
-           .populate('jugador', 'nombre')
-           .populate('partido', 'equipoRival' , 'fecha');
+            .populate('jugador', 'nombre correo rol posicion')
+            .populate('partido', 'equipoRival Fecha');
         res.status(200).json(estadisticasJugadores);
     } catch (error) {
+        console.error(error);
         res.status(400).json({ message: 'Error al obtener las estadísticas de los jugadores', error });
     }
 }
@@ -36,7 +37,9 @@ exports.obtenerEstadisticasJugadorPorId = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const estadisticasJugador = await EstadisticasJugador.findById(id);
+        const estadisticasJugador = await EstadisticasJugador.findById(id)
+            .populate('jugador', 'nombre correo rol posicion')
+            .populate('partido', 'equipoRival Fecha');
         if (!estadisticasJugador) {
             return res.status(404).json({ message: 'No se encuentran estadisticas para este jugador' });
         }
