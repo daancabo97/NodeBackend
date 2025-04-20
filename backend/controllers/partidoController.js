@@ -10,7 +10,11 @@ exports.crearPartido = async (req, res) => {
     try {
         const nuevoPartido = new Partido(req.body);
         await nuevoPartido.save();
-        res.status(201).json({ message: 'Se ha creado con exito el partido!', nuevoPartido });
+
+        const nombresJugadores = await Partido.findById(nuevoPartido._id)
+            .populate('jugadoresConvocados.jugador', 'nombre')
+            .populate('Tecnico', 'nombre');
+        res.status(201).json({ message: 'Se ha creado con exito el partido!', nuevoPartido: nombresJugadores });
     } catch (error) {
         res.status(400).json({ message: 'Error al crear el partido', error });
     }
@@ -19,7 +23,7 @@ exports.crearPartido = async (req, res) => {
 exports.obtenerPartidos = async (req, res) => {
     try {
         const partidos = await Partido.find()
-            .populate('jugadoresConvocados', 'nombre')
+            .populate('jugadoresConvocados.jugador', 'nombre')
             .populate('Tecnico', 'nombre');
         res.status(200).json(partidos);
     } catch (error) {
@@ -31,7 +35,9 @@ exports.obtenerPartidoPorId = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const partidoEncontrado = await Partido.findById(id);
+        const partidoEncontrado = await Partido.findById(id)
+            .populate('jugadoresConvocados.jugador', 'nombre')
+            .populate('Tecnico', 'nombre');
         if (!partidoEncontrado) {
             return res.status(404).json({ message: 'Partido no encontrado' });
         }
@@ -49,7 +55,9 @@ exports.actualizarPartido = async (req, res) => {
     }
 
     try {
-        const partidoActualizado = await Partido.findByIdAndUpdate(id, req.body, { new: true });
+        const partidoActualizado = await Partido.findByIdAndUpdate(id, req.body, { new: true })
+            .populate('jugadoresConvocados.jugador', 'nombre')
+            .populate('Tecnico', 'nombre');
         if (!partidoActualizado) {
             return res.status(404).json({ message: 'Partido no encontrado' });
         }

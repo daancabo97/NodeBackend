@@ -10,7 +10,16 @@ const partidoSchema = new mongoose.Schema({
         enum: ['Liga', 'Copa del Rey', 'Supercopa de España', 'Supercopa de Europa',  'Champions', 'Mundial de Clubes'],
         required: true
       },
-    jugadoresConvocados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }],
+    jugadoresConvocados: [
+        {
+            jugador: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' },
+            posicion: {
+                 type: String,
+                 enum: ['Portero', 'Defensa', 'Centrocampista', 'Delantero'],
+                 required: true
+                }
+            }
+        ],
     Tecnico: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }
 });
 
