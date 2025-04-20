@@ -80,7 +80,6 @@ exports.actualizarRoles = async (req, res) => {
         return res.status(400).json({ message: 'Los IDs deben ser un arreglo' });
     }
 
-
     const rolesValidos = ['admin', 'jugador', 'tecnico'];
     const actualizacionesFiltradas = actualizaciones.filter(
         usuario => rolesValidos.includes(usuario.rol)

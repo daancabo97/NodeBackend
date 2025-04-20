@@ -11,6 +11,7 @@ app.use(express.json());
 
 
 // Conexion a la base de datos con mongoose:
+
   const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017";
   const DATABASE_NAME = "SegundoProyectoBackend";
 
@@ -24,9 +25,15 @@ app.use(express.json());
   .catch((err) => console.error("Error de conexión:", err));
 
 
-// Api Rest usuarios: http://localhost:3000/api/usuarios
+ 
   const usuarioRouters = require("./routes/usuarioRouters");
   app.use("/api/usuarios", usuarioRouters);
+
+  const partidoRouters = require("./routes/partidoRouters");
+  app.use("/api/partidos", partidoRouters);
+
+  const estadisticasJugadorRouters = require("./routes/estadisticasJugadorRouters");
+  app.use("/api/estadisticas", estadisticasJugadorRouters);
 
 
 app.listen(port, () => {
