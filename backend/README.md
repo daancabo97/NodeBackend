@@ -53,3 +53,4 @@ GET      ->   localhost:3000/api/usuarios/obtener             ->    Obtiene todo
 GET      ->   localhost:3000/api/usuarios/obtener/:id         ->    Obtiene un usuario por ID
 PUT      ->   localhost:3000/api/usuarios/actualizar/:id      ->    Actualiza un usuario por ID
 DELETE   ->   localhost:3000/api/usuarios/eliminar/:id        ->    Elimina un usuario por ID
+PUT      ->   localhost:3000/api/usuarios/actualizar-roles    ->    Actualiza todos los roles por ID mediante una unica solicitud

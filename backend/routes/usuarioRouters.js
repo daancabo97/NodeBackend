@@ -7,5 +7,6 @@ router.get("/obtener", usuarioController.obtenerUsuarios);
 router.get("/obtener/:id", usuarioController.obtenerUsuarioPorId);
 router.put("/actualizar/:id", usuarioController.actualizarUsuario);
 router.delete("/eliminar/:id", usuarioController.eliminarUsuario);
+router.put("/actualizar-roles", usuarioController.actualizarRoles);
 
 module.exports = router;

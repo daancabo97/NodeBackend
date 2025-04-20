@@ -72,3 +72,33 @@ exports.eliminarUsuario = async (req, res) => {
         res.status(400).json({ message: 'Error al eliminar el usuario', error });
     }
 }
+
+exports.actualizarRoles = async (req, res) => {
+    const actualizaciones = req.body;
+
+    if(!Array.isArray(actualizaciones)){
+        return res.status(400).json({ message: 'Los IDs deben ser un arreglo' });
+    }
+
+
+    const rolesValidos = ['admin', 'jugador', 'tecnico'];
+    const actualizacionesFiltradas = actualizaciones.filter(
+        usuario => rolesValidos.includes(usuario.rol)
+    );
+
+
+    try {
+        const usuariosActualizados = actualizacionesFiltradas.map((usuario) => ({
+            updateOne: {
+                filter: { _id: usuario._id },
+                update: { rol: usuario.rol },
+            }
+        }));
+    
+        const resultado = await Usuario.bulkWrite(usuariosActualizados);
+
+        res.status(200).json({ message: 'Roles actualizados exitosamente', resultado });
+    } catch (error) {
+        res.status(400).json({ message: 'Error al actualizar los roles', error });
+    }
+}
