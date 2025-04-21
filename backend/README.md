@@ -73,5 +73,5 @@ Rutas:
         GET     -> localhost:3000/api/estadisticas/obtener       -> Obtiene todas las estadísticas de jugadores
         GET     -> localhost:3000/api/estadisticas/obtener/:id   -> Obtiene estadísticas de un jugador por ID de jugador
         PUT     -> localhost:3000/api/estadisticas/actualizar/:id -> Actualiza estadísticas por ID de estadistica
-        DELETE  -> localhost:3000/api/estadisticas/eliminar/:id  -> Elimina estadísticas de un jugador por ID
+        DELETE  -> localhost:3000/api/estadisticas/eliminar/:id  -> Elimina estadísticas de un jugador por ID de estadistica
         DELETE  -> localhost:3000/api/estadisticas/eliminar      -> Elimina todas las estadísticas de jugadores por ID mediante una unica solicitud
