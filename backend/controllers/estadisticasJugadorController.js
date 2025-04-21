@@ -37,11 +37,11 @@ exports.obtenerEstadisticasJugadorPorId = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const estadisticasJugador = await EstadisticasJugador.findById(id)
+        const estadisticasJugador = await EstadisticasJugador.findOne({jugador: id})
             .populate('jugador', 'nombre correo rol posicion')
             .populate('partido', 'equipoRival Fecha');
         if (!estadisticasJugador) {
-            return res.status(404).json({ message: 'No se encuentran estadisticas para este jugador' });
+            return res.status(404).json({ message: 'No se encuentraron estadisticas para este jugador' });
         }
         res.status(200).json(estadisticasJugador);
     } catch (error) {
@@ -57,10 +57,14 @@ exports.actualizarEstadisticasJugador = async (req, res) => {
     }
 
     try {
-        const estadisticaActualizadaJugador = await EstadisticasJugador.findByIdAndUpdate(id, req.body, { new: true });
-        if (!estadisticaActualizadaJugador) {
-            return res.status(404).json({ message: 'Estadisticas del jugador no encontradas' });
+        const estadisticaActualizadaJugador = await EstadisticasJugador.findByIdAndUpdate(id, req.body, { new: true })
+        .populate('jugador', 'nombre correo rol posicion')
+        .populate('partido', 'equipoRival Fecha');
+
+        if(!estadisticaActualizadaJugador) {
+            return res.status(404).json({ message: 'No se encontraron estadisticas para este jugador' });
         }
+
         res.status(200).json({ message: 'Se han actualizado con exito las estadisticas del jugador!', estadisticaActualizadaJugador });
     } catch (error) {
         res.status(400).json({ message: 'Error al actualizar las estadísticas del jugador', error });
