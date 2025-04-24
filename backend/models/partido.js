@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const partidoSchema = new mongoose.Schema({
     equipoRival: String,
-    Fecha: Date,
-    Lugar: String,
-    Estadio: String,
-    Competencia: {
+    fecha: Date,
+    lugar: String,
+    estadio: String,
+    competencia: {
         type: String,
         enum: ['Liga', 'Copa del Rey', 'Supercopa de España', 'Supercopa de Europa',  'Champions', 'Mundial de Clubes'],
         required: true

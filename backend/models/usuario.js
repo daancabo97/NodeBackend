@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -16,7 +17,7 @@ const usuarioSchema = new mongoose.Schema({
     },
     rol: {
         type: String,
-        enum: ['admin', 'jugador', 'tecnico'],
+        enum: ['admin', 'jugador', 'tecnico', 'usuario'],
         default: 'usuario'
     },
     posicion: {
@@ -25,6 +26,17 @@ const usuarioSchema = new mongoose.Schema({
         required: function() {
             return this.rol === 'jugador';
         }
+    }
+});
+
+usuarioSchema.pre('save', async function(next) {
+    if (!this.isModified('contrasena')) return next();
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.contrasena = await bcrypt.hash(this.contrasena, salt);
+        next();
+    } catch (error) {
+        next(error);
     }
 });
 
